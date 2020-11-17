@@ -1,0 +1,13 @@
+body {
+  background-color: #2b2d42;
+  color: #EDF2F4;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+.banner {
+  background-color: #f00000;
+}
