@@ -20,30 +20,33 @@ const weatherCodes = {
 
 let nextMatch;
 
+// Fetch functions that make the API calls ***************************************************
 function fetchSportsDbResults(url) {
-  console.log(url);
+  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayFootball(responseJson))
-    .catch((err) => console.log("Nope"));
+    .catch((err) => alert("There was an error. Please try again."));
 }
 
 function fetchWeatherResults(url) {
-  console.log(url);
+  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayWeather(responseJson))
-    .catch((err) => console.log("Nope"));
+    .catch((err) => alert("There was an error. Please try again."));
 }
 
 function fetchNewsResults(url) {
-  console.log(url);
+  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayNews(responseJson))
-    .catch((err) => console.log("Nope"));
+    .catch((err) => alert("There was an error. Please try again."));
 }
+// ********************************************************************************************
 
+// Used to determine which weather icon should be loaded **************************************
 function getWeatherIconCode(code) {
   if (code == 800) {
     return weatherCodes.eight;
@@ -61,13 +64,15 @@ function getWeatherIconCode(code) {
     return weatherCodes.eightPlus;
   }
 }
+// **********************************************************************************************
 
+// Display functions for each API call ********************************************************************************
 function displayNews(responseJson) {
-  console.log(responseJson.articles);
+  // console.log(responseJson.articles);
   for (let i = 0; i < responseJson.articles.length; i++) {
     $("#articles-container").append(`
     <div class="article-item">
-    <img class="article-img" src="${responseJson.articles[i].image}" />
+    <img class="article-img" src="${responseJson.articles[i].image}" alt="Article image"/>
     <div class="article-title">
     <h3><a href="${responseJson.articles[i].url}" target="_blank">${responseJson.articles[i].title}</a></h3>
     <p>${responseJson.articles[i].description}</p>
@@ -81,7 +86,7 @@ function displayNews(responseJson) {
 
 function displayFootball(responseJson) {
   nextMatch = responseJson.events[0];
-  console.log(nextMatch);
+  // console.log(nextMatch);
   $("#next-match-img").append(
     `<img id="event-img" src="${nextMatch.strThumb}" />`
   );
@@ -89,26 +94,26 @@ function displayFootball(responseJson) {
   <div>${nextMatch.dateEvent}</div>`);
 }
 
-function configureLocation(match) {
-  if (match.strVenue == "") {
-    return "Emirates+Stadium+England";
-  } else {
-    let locationStr = "";
-    const venueArray = match.strVenue.split(" ");
-    venueArray.push(match.strCountry);
-    locationStr = venueArray.join("+");
-    console.log(locationStr);
-    return locationStr;
-  }
-}
+// function configureLocation(match) {
+//   if (match.strVenue == "") {
+//     return "Emirates+Stadium+England";
+//   } else {
+//     let locationStr = "";
+//     const venueArray = match.strVenue.split(" ");
+//     venueArray.push(match.strCountry);
+//     locationStr = venueArray.join("+");
+//     console.log(locationStr);
+//     return locationStr;
+//   }
+// }
 
 function displayWeather(responseJson) {
-  console.log(responseJson);
+  // console.log(responseJson);
   const currentWeatherCode = responseJson.weather[0].id;
   const currentTemp = Math.round(responseJson.main.temp);
   const currentWeather = responseJson.weather[0].main;
   const currentWind = Math.round(responseJson.wind.speed);
-  console.log(configureLocation(nextMatch));
+  // console.log(configureLocation(nextMatch));
   //   $("#weather-container").append(
   //     `<iframe
   //     width="600"
@@ -131,14 +136,18 @@ function displayWeather(responseJson) {
   <div class="weather-item cur-temp">${currentTemp}</div>
   <div class="weather-item"><p>${currentWind} mph</p></div>`);
 }
+// ******************************************************************************************************************
 
+// Functions related to the top button ******************************************
 function topBtnClick() {
+  // Listens for click on top button and calls the topfunction
   $("#top-btn").click((e) => {
     topFunction();
   });
 }
 
 function topFunction() {
+  // Sets scrollTop to 0, pulling user back to the top of the page
   document.scrollingElement.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
@@ -148,6 +157,7 @@ window.onscroll = function () {
 };
 
 function scrollFunction() {
+  // Toggles the hidden class based on whether the user has scrolled 100px down the page
   if (
     document.scrollingElement.scrollTop > 100 ||
     document.documentElement.scrollTop > 100
@@ -157,13 +167,12 @@ function scrollFunction() {
     $("#top-btn").addClass("hidden");
   }
 }
+// ******************************************************************************
 
 function handler() {
-  console.log("JQuery is connected");
+  // console.log("JQuery is connected");
   fetchSportsDbResults(sportsDbCall);
-  setTimeout(function () {
-    fetchWeatherResults(weatherBaseUrl);
-  }, 300);
+  fetchWeatherResults(weatherBaseUrl);
   fetchNewsResults(newsDbCall);
   topBtnClick();
 }
