@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Armory</title>
+    <title>The Cannon</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
@@ -20,22 +20,47 @@
   <body>
     <header class="banner">
       <div class="item-banner">
-        <h1>The Armory</h1>
+        <h1>The Cannon</h1>
       </div>
     </header>
-    <div class="container">
+    <nav class="nav-bar">
+      <ul class="nav-list">
+        <li><a href="#weather-container">Weather</a></li>
+        <li><a href="#stats-container">Next Match</a></li>
+        <li><a href="#news-container">News</a></li>
+      </ul>
+    </nav>
+    <div class="body-container">
       <main>
-        <div class="weather-container">
-          <h2>Weather</h2>
-        </div>
-        <div class="stats-container">
-          <h2>Stats</h2>
-        </div>
-        <div class="news-container">
-          <h2>News</h2>
+        <section id="top-row">
+          <div id="weather-container">
+            <div id="weather-title">
+              <h4>Weather at the Emirates</h4>
+            </div>
+            <div id="weather-info">
+              <div id="weather-icon"></div>
+              <div id="weather-temp"></div>
+            </div>
+          </div>
+          <div id="stats-container">
+            <div id="next-match-stats"></div>
+            <div id="next-match-img"></div>
+          </div>
+        </section>
+        <div id="news-container">
+          <div id="articles-container"></div>
         </div>
       </main>
     </div>
+    <button class="hidden" id="top-btn" title="Go to top">Top</button>
+    <footer>
+      <div id="footer-list">
+        <ul>
+          <li><a href="https://github.com/WebBrantDev">GitHub</a></li>
+          <li><a href="https://www.arsenal.com/">Arsenal Website</a></li>
+        </ul>
+      </div>
+    </footer>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.js"
       crossorigin="anonymous"
