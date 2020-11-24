@@ -1,6 +1,8 @@
 // Keys and other constants
 const newsAPIKey = "4dd63cc2e7a24f10b6632603f01023aa";
 const mapsKey = "AIzaSyCmH4NlrKezXfO9y-qGCiiVIxKOsNb6Q10";
+const newsBaseURL =
+  "https://gnews.io/api/v4/search?q=&country=gb&max=7&token=7f8baabfb5dc81f71e3bd500c1ec6f57";
 const newsDbCall =
   "https://gnews.io/api/v4/search?q=arsenal&country=gb&max=7&token=7f8baabfb5dc81f71e3bd500c1ec6f57";
 const sportsDbCall =
@@ -42,7 +44,7 @@ function fetchNewsResults(url) {
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayNews(responseJson))
-    .catch((err) => alert("There was an error. Please try again."));
+    .catch((err) => console.log(err));
 }
 // ********************************************************************************************
 
@@ -69,19 +71,25 @@ function getWeatherIconCode(code) {
 // Display functions for each API call ********************************************************************************
 function displayNews(responseJson) {
   // console.log(responseJson.articles);
-  for (let i = 0; i < responseJson.articles.length; i++) {
-    $("#articles-container").append(`
-    <div class="article-item">
-    <img class="article-img" src="${responseJson.articles[i].image}" alt="Article image"/>
-    <div class="article-title">
-    <h3><a href="${responseJson.articles[i].url}" target="_blank">${responseJson.articles[i].title}</a></h3>
-    <p>${responseJson.articles[i].description}</p>
-    </div>
-    <div class="article-sources">
-    <p><a href="${responseJson.articles[i].source.url}" target="_blank">${responseJson.articles[i].source.name}</a></p>
-    </div>
-    </div>`);
+  $("#articles-container").empty();
+  if (!responseJson.articles) {
+    $("#articles-container").append(
+      "<div class='no-results'>No results!</div>"
+    );
   }
+  // for (let i = 0; i < responseJson.articles.length; i++) {
+  //   $("#articles-container").append(`
+  //   <div class="article-item">
+  //   <img class="article-img" src="${responseJson.articles[i].image}" alt="Article image"/>
+  //   <div class="article-title">
+  //   <h3><a href="${responseJson.articles[i].url}" target="_blank">${responseJson.articles[i].title}</a></h3>
+  //   <p>${responseJson.articles[i].description}</p>
+  //   </div>
+  //   <div class="article-sources">
+  //   <p><a href="${responseJson.articles[i].source.url}" target="_blank">${responseJson.articles[i].source.name}</a></p>
+  //   </div>
+  //   </div>`);
+  // }
 }
 
 function displayFootball(responseJson) {
@@ -106,6 +114,14 @@ function displayFootball(responseJson) {
 //     return locationStr;
 //   }
 // }
+
+function configureNewsCall(value) {
+  const formattedURL = `https://gnews.io/api/v4/search?q=${value.join(
+    "+"
+  )}&country=gb&max=7&token=7f8baabfb5dc81f71e3bd500c1ec6f57`;
+  console.log(formattedURL);
+  fetchNewsResults(formattedURL);
+}
 
 function displayWeather(responseJson) {
   // console.log(responseJson);
@@ -138,7 +154,7 @@ function displayWeather(responseJson) {
 }
 // ******************************************************************************************************************
 
-// Functions related to the top button ******************************************
+// Functions related to the top button ******************************************************
 function topBtnClick() {
   // Listens for click on top button and calls the topfunction
   $("#top-btn").click((e) => {
@@ -167,14 +183,26 @@ function scrollFunction() {
     $("#top-btn").addClass("hidden");
   }
 }
-// ******************************************************************************
+// **********************************************************************************************
 
+// Listener function ****************************************************************************
+
+function searchSubmit() {
+  $("#news-form").submit((e) => {
+    e.preventDefault();
+    const userValue = $("#search-bar").val().split(" ");
+    configureNewsCall(userValue);
+  });
+}
+
+// **********************************************************************************************
 function handler() {
   // console.log("JQuery is connected");
   fetchSportsDbResults(sportsDbCall);
   fetchWeatherResults(weatherBaseUrl);
   fetchNewsResults(newsDbCall);
   topBtnClick();
+  searchSubmit();
 }
 
 $(handler);
