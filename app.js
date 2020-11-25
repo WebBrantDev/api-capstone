@@ -70,26 +70,27 @@ function getWeatherIconCode(code) {
 
 // Display functions for each API call ********************************************************************************
 function displayNews(responseJson) {
-  // console.log(responseJson.articles);
+  console.log(responseJson);
   $("#articles-container").empty();
-  if (!responseJson.articles) {
+  $("#search-bar").val("");
+  if (!responseJson.articles || responseJson.totalArticles == 0) {
     $("#articles-container").append(
-      "<div class='no-results'>No results!</div>"
+      "<div class='no-results'><p>No results!</p></div>"
     );
   }
-  // for (let i = 0; i < responseJson.articles.length; i++) {
-  //   $("#articles-container").append(`
-  //   <div class="article-item">
-  //   <img class="article-img" src="${responseJson.articles[i].image}" alt="Article image"/>
-  //   <div class="article-title">
-  //   <h3><a href="${responseJson.articles[i].url}" target="_blank">${responseJson.articles[i].title}</a></h3>
-  //   <p>${responseJson.articles[i].description}</p>
-  //   </div>
-  //   <div class="article-sources">
-  //   <p><a href="${responseJson.articles[i].source.url}" target="_blank">${responseJson.articles[i].source.name}</a></p>
-  //   </div>
-  //   </div>`);
-  // }
+  for (let i = 0; i < responseJson.articles.length; i++) {
+    $("#articles-container").append(`
+    <div class="article-item">
+    <img class="article-img" src="${responseJson.articles[i].image}" alt="Article image"/>
+    <div class="article-title">
+    <h3><a href="${responseJson.articles[i].url}" target="_blank">${responseJson.articles[i].title}</a></h3>
+    <p>${responseJson.articles[i].description}</p>
+    </div>
+    <div class="article-sources">
+    <p><a href="${responseJson.articles[i].source.url}" target="_blank">${responseJson.articles[i].source.name}</a></p>
+    </div>
+    </div>`);
+  }
 }
 
 function displayFootball(responseJson) {
