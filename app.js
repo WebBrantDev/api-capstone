@@ -24,7 +24,6 @@ let nextMatch;
 
 // Fetch functions that make the API calls ***************************************************
 function fetchSportsDbResults(url) {
-  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayFootball(responseJson))
@@ -32,7 +31,6 @@ function fetchSportsDbResults(url) {
 }
 
 function fetchWeatherResults(url) {
-  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayWeather(responseJson))
@@ -40,7 +38,6 @@ function fetchWeatherResults(url) {
 }
 
 function fetchNewsResults(url) {
-  // console.log(url);
   fetch(url)
     .then((response) => response.json())
     .then((responseJson) => displayNews(responseJson))
@@ -95,7 +92,6 @@ function displayNews(responseJson) {
 
 function displayFootball(responseJson) {
   nextMatch = responseJson.events[0];
-  // console.log(nextMatch);
   $("#next-match-img").append(
     `<img id="event-img" src="${nextMatch.strThumb}" />`
   );
@@ -103,46 +99,11 @@ function displayFootball(responseJson) {
   <div>${nextMatch.dateEvent}</div>`);
 }
 
-// function configureLocation(match) {
-//   if (match.strVenue == "") {
-//     return "Emirates+Stadium+England";
-//   } else {
-//     let locationStr = "";
-//     const venueArray = match.strVenue.split(" ");
-//     venueArray.push(match.strCountry);
-//     locationStr = venueArray.join("+");
-//     console.log(locationStr);
-//     return locationStr;
-//   }
-// }
-
-function configureNewsCall(value) {
-  const formattedURL = `https://gnews.io/api/v4/search?q=${value.join(
-    "+"
-  )}&country=gb&max=7&token=7f8baabfb5dc81f71e3bd500c1ec6f57`;
-  console.log(formattedURL);
-  fetchNewsResults(formattedURL);
-}
-
 function displayWeather(responseJson) {
-  // console.log(responseJson);
   const currentWeatherCode = responseJson.weather[0].id;
   const currentTemp = Math.round(responseJson.main.temp);
   const currentWeather = responseJson.weather[0].main;
   const currentWind = Math.round(responseJson.wind.speed);
-  // console.log(configureLocation(nextMatch));
-  //   $("#weather-container").append(
-  //     `<iframe
-  //     width="600"
-  //     height="450"
-  //     frameborder="0"
-  //     style="border: 0"
-  //     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCmH4NlrKezXfO9y-qGCiiVIxKOsNb6Q10
-  // &q=${configureLocation(nextMatch)}"
-  //     allowfullscreen
-  //   >
-  //   </iframe>`
-  //   );
   $("#weather-icon").append(
     `<div class="weather-item"><img id="weather-icon" src="${getWeatherIconCode(
       currentWeatherCode
@@ -152,6 +113,14 @@ function displayWeather(responseJson) {
   $("#weather-temp").append(`
   <div class="weather-item cur-temp">${currentTemp}</div>
   <div class="weather-item"><p>${currentWind} mph</p></div>`);
+}
+// Configures the search parameters for the news search
+function configureNewsCall(value) {
+  const formattedURL = `https://gnews.io/api/v4/search?q=${value.join(
+    "+"
+  )}&country=gb&max=7&token=7f8baabfb5dc81f71e3bd500c1ec6f57`;
+  console.log(formattedURL);
+  fetchNewsResults(formattedURL);
 }
 // ******************************************************************************************************************
 
@@ -198,7 +167,6 @@ function searchSubmit() {
 
 // **********************************************************************************************
 function handler() {
-  // console.log("JQuery is connected");
   fetchSportsDbResults(sportsDbCall);
   fetchWeatherResults(weatherBaseUrl);
   fetchNewsResults(newsDbCall);

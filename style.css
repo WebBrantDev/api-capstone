@@ -1,3 +1,4 @@
+/* Basic Styles **************************************************************************** */
 body,
 html {
   height: 100%;
@@ -34,21 +35,20 @@ h1 {
   letter-spacing: 3px;
 }
 
-iframe {
-  border-radius: 4px;
-  margin: 4px;
-  height: 400px;
-  width: 400px;
+ul {
+  list-style-type: none;
 }
 
-#news-form {
-  margin: 10px 20px;
+#top-row {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
 }
 
+/* ************************************************************************************ */
+
+/* Search Bar Styles ****************************************************************** */
 #search-bar {
-  /* flex: 4; */
   height: 2em;
   border: none;
   outline: none;
@@ -61,7 +61,6 @@ iframe {
 }
 
 #search-submit {
-  /* flex: 1; */
   align-self: center;
   width: 60%;
   height: 2em;
@@ -82,15 +81,7 @@ iframe {
   transform: translateY(3px);
 }
 
-ul {
-  list-style-type: none;
-}
-
-#top-row {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-}
+/* ********************************************************************************** */
 
 /* Footer Styles ****************************************************************** */
 footer {
@@ -212,7 +203,6 @@ footer a:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   color: #F2F4F3;
   flex: 1;
   background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("images/emirates.jpg");
@@ -258,6 +248,12 @@ footer a:hover {
 /* ******************************************************************************************** */
 
 /* Articles section styles ******************************************************************** */
+#news-form {
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
 #news-container {
   margin-top: 60px;
 }
@@ -282,8 +278,6 @@ footer a:hover {
 .article-img {
   width: auto;
   height: 250px;
-  /* border-radius: 4px; */
-  /* float: left; */
   padding: 0 10px 0 0;
   margin-right: 12px;
   display: none;
@@ -326,7 +320,6 @@ footer a:hover {
   background-color: #C42021;
   color: #F2F4F3;
   border-radius: 50%;
-  /* display: none; */
   position: fixed;
   bottom: 40px;
   right: 40px;
@@ -368,7 +361,6 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
     color: #F2F4F3;
     flex: 1;
     background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("images/emirates.jpg");
@@ -382,7 +374,6 @@ footer a:hover {
   .article-img {
     width: auto;
     height: 250px;
-    /* border-radius: 4px; */
     float: left;
     padding: 0 10px 0 0;
     margin-right: 12px;
